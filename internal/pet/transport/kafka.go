@@ -20,8 +20,8 @@ func RegisterKafkaRoutes(router *message.Router, subscriber *kafka.Subscriber, p
 		watermilltransport.EncodeResponse,
 	)
 
-	handler := router.AddNoPublisherHandler("create_pet", fmt.Sprintf("accounts.%s", events.EventPetCreated), subscriber, petCreateSubscriber.Handle)
-	poisonMiddleware, err := middleware.PoisonQueue(publisher, fmt.Sprintf("accounts.%s.poison", events.EventPetCreated))
+	handler := router.AddNoPublisherHandler("create_pet", fmt.Sprintf("profiles.%s", events.EventPetCreated), subscriber, petCreateSubscriber.Handle)
+	poisonMiddleware, err := middleware.PoisonQueue(publisher, fmt.Sprintf("profiles.%s.poison", events.EventPetCreated))
 	if err != nil {
 		return err
 	}
