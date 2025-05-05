@@ -6,10 +6,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-const (
-	PetServiceHostKey = "PET_SERVICE_HOST"
-)
-
 func InitConfig() viper.Viper {
 	viper := viper.New()
 
@@ -19,7 +15,6 @@ func InitConfig() viper.Viper {
 	viper.SetConfigType("yaml")
 
 	viper.BindEnv(common.HTTPPortKey)
-	viper.BindEnv(common.GRPCPortKey)
 	viper.BindEnv(common.DBHostKey)
 	viper.BindEnv(common.DBPortKey)
 	viper.BindEnv(common.DBUserKey)
@@ -27,10 +22,8 @@ func InitConfig() viper.Viper {
 	viper.BindEnv(common.CertsEndpointKey)
 	viper.BindEnv(common.InsecureSkipVerifyKey)
 	viper.BindEnv(common.KafkaBrokersKey)
-	viper.BindEnv(PetServiceHostKey)
 
 	viper.SetDefault(common.HTTPPortKey, "80")
-	viper.SetDefault(common.GRPCPortKey, "81")
 	viper.SetDefault(common.DBHostKey, "localhost")
 	viper.SetDefault(common.DBPortKey, "27017")
 	viper.SetDefault(common.DBUserKey, "root")
@@ -39,12 +32,9 @@ func InitConfig() viper.Viper {
 	viper.SetDefault(common.KafkaBrokersKey, "kafka:9092")
 
 	pflag.String("http-port", "", "HTTP Port")
-	pflag.String("grpc-port", "", "GRPC Port")
 	pflag.Parse()
 
 	viper.BindPFlag(common.HTTPPortKey, pflag.Lookup("http-port"))
-	viper.BindPFlag(common.GRPCPortKey, pflag.Lookup("grpc-port"))
-
 	common.SetConnectionStringConfig(viper)
 
 	return *viper
